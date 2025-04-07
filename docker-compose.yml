@@ -1,0 +1,79 @@
+version: '2.2'
+services:
+  zookeeper:
+    container_name: zookeeper
+    image: quay.io/debezium/zookeeper:${DEBEZIUM_VERSION}
+    ports:
+      - 2181:2181
+      - 2888:2888
+      - 3888:3888
+    networks:
+      - sync_debezium_network
+  kafka:
+    container_name: kafka
+    image: quay.io/debezium/kafka:${DEBEZIUM_VERSION}
+    ports:
+      - 9092:9092
+    depends_on:
+      - zookeeper
+    environment:
+      - ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_LISTENERS=INTERNAL://kafka:29092,EXTERNAL://0.0.0.0:9092
+      - KAFKA_ADVERTISED_LISTENERS=INTERNAL://kafka:29092,EXTERNAL://${IP_CONFIG_COMPUTER}:9092
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      - KAFKA_INTER_BROKER_LISTENER_NAME=INTERNAL
+      - KAFKA_LOG_RETENTION_MS=86400000
+      - KAFKA_LOG_CLEANER_ENABLE=true
+      - KAFKA_LOG_CLEANUP_POLICY=compact
+      - KAFKA_LOG_RETENTION_BYTES=1073741824
+      - message.max.bytes=104857600      # 10 MB
+      - replica.fetch.max.bytes=104857600  # 10 MB
+    networks:
+      - sync_debezium_network
+
+  postgres:
+    container_name: postgres
+    image: postgres:16.4
+    ports:
+      - 5439:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks:
+      - sync_debezium_network
+    volumes:
+#      - ./postgresql.conf:/var/lib/postgresql/data2/postgresql.conf
+      - ./data:/var/lib/postgresql/data
+  connect:
+    container_name: connect
+    image: quay.io/debezium/connect:${DEBEZIUM_VERSION}
+    ports:
+      - 8083:8083
+    depends_on:
+      - kafka
+    environment:
+      - BOOTSTRAP_SERVERS=kafka:29092
+      - GROUP_ID=1
+      - CONFIG_STORAGE_TOPIC=debezium_configs
+      - OFFSET_STORAGE_TOPIC=debezium_offsets
+      - STATUS_STORAGE_TOPIC=debezium_statuses
+      - OFFSET_STORAGE_REPLICATION_FACTOR=1
+      - OFFSET_STORAGE_PARTITIONS=1
+
+    networks:
+      - sync_debezium_network
+  ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
+    ports:
+      - "8081:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
+    networks:
+      - sync_debezium_network
+networks:
+  sync_debezium_network:
+    driver: bridge
+volumes:
+  pgdata:

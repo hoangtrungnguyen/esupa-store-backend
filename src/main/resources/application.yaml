@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: emise
+  datasource:
+    url: jdbc:postgresql://localhost:5439/enousan_pos
+    username: postgres # Use the dedicated user
+    password: postgres # Use a strong password
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      data-source-properties:
+        allow_jdbc_metadata_access: true
+  jpa:
+    show-sql: true # Set to false in production
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true # Set to false in production
+        format_sql: true
+  flyway:
+    enabled: false # set to TRUE after releasing to production
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+  kafka:
+    bootstrap-servers: localhost:9092
+    topic: KAFKA_TOPIC_FROM_ADMIN
+    consumer:
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
