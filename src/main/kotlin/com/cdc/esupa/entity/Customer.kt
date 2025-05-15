@@ -1,4 +1,4 @@
-package com.cdc.emise.entity
+package com.cdc.esupa.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -7,8 +7,14 @@ import jakarta.persistence.Table
 
 @Entity
 @Table(name = "customers")
-data class Customer (
+data class Customer(
     @Id
     @Column(name = "id", nullable = false)
-    open val id: Long = -1
-)
+    val id: Long = -1,
+    @Column(name = "name")
+    val name: String = "",
+    @Column(name = "code", nullable = false)
+    val code: String = "",
+
+
+    )

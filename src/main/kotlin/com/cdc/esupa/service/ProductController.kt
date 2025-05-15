@@ -1,7 +1,7 @@
-package com.cdc.emise.service
+package com.cdc.esupa.service
 
-import com.cdc.emise.entity.Product
-import com.cdc.emise.infra.ProductRepository
+import com.cdc.esupa.entity.Product
+import com.cdc.esupa.infra.ProductRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

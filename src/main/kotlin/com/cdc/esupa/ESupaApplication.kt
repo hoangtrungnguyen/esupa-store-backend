@@ -1,11 +1,11 @@
-package com.cdc.emise
+package com.cdc.esupa
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class EmiseApplication
+class ESupaApplication
 
 fun main(args: Array<String>) {
-    runApplication<EmiseApplication>(*args)
+    runApplication<ESupaApplication>(*args)
 }

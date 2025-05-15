@@ -1,4 +1,4 @@
-package com.cdc.emise
+package com.cdc.esupa
 
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController

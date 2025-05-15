@@ -1,1 +1,1 @@
-rootProject.name = "emise"
+rootProject.name = "esupa"
