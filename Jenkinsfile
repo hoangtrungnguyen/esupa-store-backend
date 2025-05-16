@@ -23,7 +23,7 @@ pipeline {
                 echo "Testing.."
                 sh '''
                 echo "start testing here ..."
-                sh './gradlew test'
+                ./gradlew test
                 '''
             }
         }
