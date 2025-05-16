@@ -1,11 +1,6 @@
 pipeline {
     agent {
-        node {
-            label 'docker-esupa-java-spring'
-            }
-      }
-    triggers {
-        pollSCM '* * * * *'
+        docker { image 'maven:3.9.9-eclipse-temurin-21-alpine' }
     }
     stages {
         stage('Build') {
