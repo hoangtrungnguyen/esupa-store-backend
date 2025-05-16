@@ -2,7 +2,6 @@ pipeline {
     agent {
         docker {
             image 'gradle:latest' // Or a specific Gradle version
-            args '-v /var/run/docker.sock:/var/run/docker.sock -v jenkins_home:/home/jenkins/agent -v gradle_cache:/home/gradle/.gradle'
         }
     }
     stages {
