@@ -10,6 +10,7 @@ pipeline {
                 echo "Building.."
                 sh '''
                 echo "gradle build here ..."
+                chmod +x gradlew
                 ./gradlew clean build
                 '''
             }
