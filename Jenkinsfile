@@ -10,6 +10,7 @@ pipeline {
                 echo "Building.."
                 sh '''
                 echo "gradle build here ..."
+                ./gradlew clean build
                 '''
             }
         }
@@ -18,6 +19,7 @@ pipeline {
                 echo "Testing.."
                 sh '''
                 echo "start testing here ..."
+                sh './gradlew test'
                 '''
             }
         }
