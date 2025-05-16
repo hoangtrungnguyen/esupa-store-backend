@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'gradle:latest' // Or a specific Gradle version
+            image 'gradle:8.7-jdk17'
         }
     }
     stages {
@@ -9,7 +9,10 @@ pipeline {
             steps {
                 echo "Building.."
                 sh '''
-                echo "gradle build here ..."
+                echo "Java version:"
+                java -version
+                echo "Gradle version:"
+                ./gradlew --version
                 chmod +x gradlew
                 ./gradlew clean build
                 '''
