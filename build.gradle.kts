@@ -20,12 +20,17 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":models")) // Add this line to depend on the submodule
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springframework.kafka:spring-kafka")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("org.postgresql:postgresql")
+
+    implementation("org.flywaydb:flyway-core")
+    implementation("org.flywaydb:flyway-database-postgresql")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testImplementation("org.springframework.kafka:spring-kafka-test")
@@ -38,12 +43,20 @@ kotlin {
     }
 
     sourceSets {
+
         main {
-            kotlin.srcDirs("src/main/kotlin", "models/src/main/kotlin")
-            resources.srcDirs("src/main/resources", "models/src/main/resources")
+            kotlin.srcDirs("src/main/kotlin")
+            resources.srcDirs(emptyList<String>()) // Set resource source directories to empty
+        }
+        test {
+            kotlin.srcDirs("src/test/kotlin")
+            resources.srcDirs("src/test/resources")
         }
     }
+
 }
+
+
 
 allOpen {
     annotation("jakarta.persistence.Entity")

@@ -1,12 +1,17 @@
-package com.cdc.esupa
+package com.cdc.esupa.service
 
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.bind.annotation.RequestParam // Import if using request parameters
 
 @RestController // Marks this class as a REST controller where every method returns a domain object instead of a view
 class HelloController {
 
+    @GetMapping("/")
+    fun home(): String {
+        // Returns a simple string as the response body
+        return "Home"
+    }
     // This function handles HTTP GET requests to the "/hello" path
     @GetMapping("/hello")
     fun sayHello(

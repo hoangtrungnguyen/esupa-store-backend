@@ -9,6 +9,8 @@ pipeline {
             steps {
                 echo "Building.."
                 sh '''
+                git submodule init
+                git submodule update
                 echo "Java version:"
                 java -version
                 echo "Gradle version:"

@@ -1,6 +1,6 @@
 package com.cdc.esupa.infra
 
-import com.cdc.esupa.entity.Product
+import com.esupa.storemodels.models.Product
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface ProductRepository : JpaRepository<Product, Long> {

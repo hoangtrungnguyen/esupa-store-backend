@@ -1,3 +1,5 @@
+server:
+  port: 8087 #jenkins is using 8080 port
 spring:
   application:
     name: esupa

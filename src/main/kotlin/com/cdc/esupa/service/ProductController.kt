@@ -1,7 +1,7 @@
 package com.cdc.esupa.service
 
-import com.cdc.esupa.entity.Product
 import com.cdc.esupa.infra.ProductRepository
+import com.esupa.storemodels.models.Product
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
