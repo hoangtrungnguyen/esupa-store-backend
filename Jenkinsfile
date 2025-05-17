@@ -14,7 +14,6 @@ pipeline {
                 echo "Java version:"
                 java -version
                 echo "Gradle version:"
-                chmod +x gradlew
                 ./gradlew --version
                 ./gradlew clean build
                 '''
