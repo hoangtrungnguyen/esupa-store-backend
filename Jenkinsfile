@@ -8,11 +8,6 @@ pipeline {
     stages {
         stage('Preparation') {
             steps {
-                echo 'Cleaning workspace...'
-                cleanWs() // Clean workspace at the beginning
-
-                echo 'Checking out SCM and initializing submodules...'
-                checkout scm // Standard Jenkins step to checkout source code
                 sh 'git submodule init'
                 sh 'git submodule update'
 
