@@ -13,8 +13,8 @@ pipeline {
 
                     echo "Checking out SCM and initializing submodules..."
                     checkout scm // Standard Jenkins step to checkout source code
-                    sh 'git submodule sync --recursive'
-                    sh 'git submodule update --init --recursive'
+                    sh 'git submodule init'
+                    sh 'git submodule update'
 
                     echo "Ensuring gradlew is executable..."
                     sh 'chmod +x gradlew'
