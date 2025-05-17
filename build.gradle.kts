@@ -36,6 +36,13 @@ kotlin {
     compilerOptions {
         freeCompilerArgs.addAll("-Xjsr305=strict")
     }
+
+    sourceSets {
+        main {
+            kotlin.srcDirs("src/main/kotlin", "models/src/main/kotlin")
+            resources.srcDirs("src/main/resources", "models/src/main/resources")
+        }
+    }
 }
 
 allOpen {
