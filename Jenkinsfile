@@ -5,14 +5,9 @@ pipeline {
         }
     }
 
-    tools {
-        gradle 'Gradle 8.13'
-    }
-
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
                 sh 'git submodule init'
                 sh 'git submodule update'
             }
