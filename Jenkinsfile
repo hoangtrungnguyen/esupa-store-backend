@@ -16,7 +16,7 @@ pipeline {
                 echo "Gradle version:"
                 chmod +x gradlew
                 ./gradlew --version
-                ./gradlew clean build
+                ./gradlew clean build -x test
                 '''
             }
         }
@@ -24,10 +24,19 @@ pipeline {
             steps {
                 echo "Testing.."
                 sh '''
-                echo "start testing here ..."
-                sh './gradlew test'
                 ./gradlew test
                 '''
+            }
+        }
+        stage('Create docker image') {
+            steps {
+                script {
+                    def appName = 'test-store-backend'
+                    def dockerImageTag = "${appName}:latest"
+                     // Assuming your JAR file is in build/libs/your-project.jar
+                    def jarFile = findFiles(glob: 'build/libs/*.jar').first().name
+                    
+                }
             }
         }
         stage('Deliver') {
