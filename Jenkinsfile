@@ -2,14 +2,19 @@ pipeline {
     agent {
         docker {
             image 'openjdk:17-jdk-slim' // Specify the Docker image to use
-            args '-u root' // Optional: Run the container as root if needed (use with caution)
         }
+    }
+
+    tools {
+        gradle 'Gradle 8.13'
     }
 
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
+                sh 'git submodule init'
+                sh 'git submodule update'
             }
         }
         stage('Gradle Build') {
