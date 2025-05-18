@@ -19,13 +19,12 @@ pipeline {
         }
         stage('Gradle Build') {
             steps {
-                sh 'chmod +x gradlew'
-                sh './gradlew clean build'
+                sh 'gradle clean build'
             }
         }
         stage('Test') {
             steps {
-                sh './gradlew test'
+                sh 'gradle test'
             }
         }
 //        stage('Package') {
