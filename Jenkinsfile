@@ -1,40 +1,35 @@
 pipeline {
     agent {
         docker {
-            image 'gradle:8.7-jdk17'
-            args '-v gradle-cache:/root/.gradle'
+            image 'openjdk:17-jdk-slim' // Specify the Docker image to use
+            args '-u root' // Optional: Run the container as root if needed (use with caution)
         }
     }
+
     stages {
-        stage('Preparation') {
+        stage('Checkout') {
             steps {
-                sh 'git submodule init'
-                sh 'git submodule update'
-
-                echo 'Ensuring gradlew is executable...'
-                sh 'chmod +x gradlew'
-
-                echo 'Displaying Gradle and Java versions...'
-                sh './gradlew --version'
-                // sh 'java -version' // java -version is less critical as gradlew handles Java via toolchains
+                checkout scm
             }
         }
-
-        stage('Build & Test') {
+        stage('Gradle Build') {
             steps {
-                echo 'Running Gradle clean, build, and tests...'
-                // The 'build' task typically depends on 'test', so tests will run.
-                // Using --no-daemon is often recommended for CI environments for stability.
-                sh './gradlew clean build --no-daemon'
+                sh './gradlew clean build'
             }
         }
-
-        stage('Deliver') {
+        stage('Test') {
             steps {
-                echo 'Deliver....'
-                sh '''
-                    echo "doing delivery stuff.."
-                '''
+                sh './gradlew test'
+            }
+        }
+//        stage('Package') {
+//            steps {
+//                sh './gradlew bootJar'
+//            }
+//        }
+        stage('Archive Artifacts') {
+            steps {
+                archiveArtifacts 'build/libs/*.jar'
             }
         }
     }
