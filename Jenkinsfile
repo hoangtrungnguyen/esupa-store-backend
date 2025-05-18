@@ -8,7 +8,6 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
                 sh 'git submodule init'
                 sh 'git submodule update'
             }
