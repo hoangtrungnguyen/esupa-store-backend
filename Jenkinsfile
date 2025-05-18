@@ -8,25 +8,22 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                checkout scm
                 sh 'git submodule init'
                 sh 'git submodule update'
             }
         }
         stage('Gradle Build') {
             steps {
-                sh 'gradle clean build'
+                sh 'chmod +x gradlew'
+                sh './gradlew clean build'
             }
         }
         stage('Test') {
             steps {
-                sh 'gradle test'
+                sh './gradlew test'
             }
         }
-//        stage('Package') {
-//            steps {
-//                sh './gradlew bootJar'
-//            }
-//        }
         stage('Archive Artifacts') {
             steps {
                 archiveArtifacts 'build/libs/*.jar'
