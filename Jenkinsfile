@@ -1,32 +1,41 @@
 pipeline {
     agent {
         docker {
-            image 'openjdk:17-jdk-slim' // Specify the Docker image to use
+            image 'gradle:8.7-jdk17'
         }
     }
-
     stages {
-        stage('Checkout') {
+        stage('Build') {
             steps {
-                sh 'git submodule init'
-                sh 'git submodule update'
-            }
-        }
-        stage('Gradle Build') {
-            steps {
-                sh 'chmod +x gradlew'
-                sh './gradlew clean build'
+                echo "Building.."
+                sh '''
+                git submodule init
+                git submodule update
+                echo "Java version:"
+                java -version
+                echo "Gradle version:"
+                chmod +x gradlew
+                ./gradlew --version
+                ./gradlew clean build
+                '''
             }
         }
         stage('Test') {
             steps {
+                echo "Testing.."
+                sh '''
+                echo "start testing here ..."
                 sh './gradlew test'
+                ./gradlew test
+                '''
             }
         }
-        stage('Archive Artifacts') {
+        stage('Deliver') {
             steps {
-                archiveArtifacts 'build/libs/*.jar'
+                echo 'Deliver....'
+                sh '''
+                echo "doing delivery stuff.."
+                '''
             }
         }
     }
-}
