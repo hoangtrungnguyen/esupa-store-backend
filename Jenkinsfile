@@ -35,7 +35,14 @@ pipeline {
                     def dockerImageTag = "${appName}:latest"
                      // Assuming your JAR file is in build/libs/your-project.jar
                     def jarFile = findFiles(glob: 'build/libs/*.jar').first().name
-                    
+
+                    // Create a Dockerfile (see example below) in your project root
+                    docker.build(dockerImageTag, '.') // '.' refers to the current workspace
+
+                    // Optionally, push the image to a Docker registry
+                    // docker.withRegistry('your-docker-registry-url', 'your-registry-credentials-id') {
+                    //     docker.image(dockerImageTag).push()
+                    // }
                 }
             }
         }
