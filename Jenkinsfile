@@ -16,7 +16,7 @@ pipeline {
                 echo "Gradle version:"
                 chmod +x gradlew
                 ./gradlew --version
-                ./gradlew clean build -x test
+                ./gradlew --daemon clean build -x test
                 '''
             }
         }
@@ -30,6 +30,7 @@ pipeline {
         }
         stage('Create docker image') {
             steps {
+                echo "creating docker image"
                 script {
                     def appName = 'test-store-backend'
                     def dockerImageTag = "${appName}:latest"
