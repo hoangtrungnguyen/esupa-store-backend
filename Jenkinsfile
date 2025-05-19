@@ -2,9 +2,22 @@ pipeline {
     agent {
         docker {
             image 'gradle:8.7-jdk17'
+            volumes {
+                '/var/run/docker.sock:/var/run/docker.sock'
+            }
         }
     }
     stages {
+        stage('Checkout Source') { // Stage to clone the project repository
+            steps {
+                // Checkout the source code from SCM.
+                // When the Jenkinsfile is in the repo, 'checkout scm'
+                // automatically checks out the correct branch/commit
+                // the job was triggered for.
+                checkout scm
+            }
+        }
+
         stage('Build') {
             steps {
                 echo "Building.."
