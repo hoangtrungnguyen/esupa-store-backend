@@ -2,9 +2,7 @@ pipeline {
     agent {
         docker {
             image 'gradle:8.7-jdk17'
-            volumes {
-                '/var/run/docker.sock:/var/run/docker.sock'
-            }
+            dockerOptions '-v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
     stages {
